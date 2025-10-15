@@ -20,6 +20,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -53,15 +54,21 @@ public class ServiceRegister {
             }
             serviceMap.put(interfaceName,implClass);
             interfaceMap.put(implClass,interfaceName);
+            // 修复服务注册的数据结构问题
             List<String> list = hostMap.get(implClass);
             if(list == null){
-                list = hostMap.put(implClass,List.of(host));
-            }else{
+                list = new ArrayList<>();  // 使用可变List
+                list.add(host);
+                hostMap.put(implClass, list);
+            } else {
                 list.add(host);
             }
+
             List<Integer> list1 = portMap.get(implClass);
             if(list1 == null){
-                list1 = portMap.put(implClass,List.of(port));
+                list1 = new ArrayList<>();
+                list1.add(port);
+                portMap.put(implClass, list1);
             }else{
                 list1.add(port);
             }
@@ -207,7 +214,7 @@ class RegisterCenterWorker implements Runnable{
                                 ctx.writeAndFlush(response);
                                 ctx.close();
                                 log.debug("服务端返回服务列表: {}", ServiceRegister.serviceList());
-                            } else if (uri.equals("executeService")&& method.equals("POST")) {
+                            } else if (uri.equals("/executeService")&& method.equals("POST")) {
                                 //我需要获取对应的服务名称，然后调用对应的服务
                                 ByteBuf content1 = request.content();
                                 String rpcRequest = content1.toString(CharsetUtil.UTF_8);
@@ -215,7 +222,7 @@ class RegisterCenterWorker implements Runnable{
                                 //这一步本来是想在分布式环境下通过ip和port获取服务，但是现在全部是在本地运行，所以这里直接获取服务类
                                 String interfaceName = bean.getInterfaceName();
                                 Class<?> lookup = ServiceRegister.lookup(interfaceName);
-                                //获取代理服务
+                                //获取代理服务，这里的地址之后肯定是要变得，现在已经完全写死了......
                                 ProxyUtil proxyUtil = new ProxyUtil("localhost", 8080);
                                 Object proxy = proxyUtil.getProxy(bean, lookup);
                                 //将对象写回
