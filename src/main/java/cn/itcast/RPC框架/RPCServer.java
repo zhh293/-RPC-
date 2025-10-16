@@ -1,5 +1,6 @@
 package cn.itcast.RPC框架;
 
+import cn.hutool.json.JSONUtil;
 import cn.itcast.config.Config;
 import cn.itcast.protocol.ProcotolFrameDecoder;
 import com.alibaba.fastjson2.JSONArray;
@@ -99,6 +100,92 @@ public class RPCServer {
                                         HttpResponseStatus.OK,
                                         content
                                 );
+                                //服务端接收到客户端请求之后，向注册中心发送http请求，然后将结果再返回给客户端。。。。
+                                //客户端那边连接的是服务端地址，这里的http请求要发往注册中心，所以地址是完全不同的，需要注意。。。
+                                ch.pipeline().addLast(new SimpleChannelInboundHandler<FullHttpRequest>() {
+                                    @Override
+                                    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
+                                        // 处理HTTP请求
+                                        String uri = request.uri();
+
+                                        String method = request.method().name();
+                                        //如果url是/register，那么就执行下面这段逻辑
+                                        if(uri.equals("/register")&& method.equals("POST")){
+                                            ByteBuf content1 = request.content();
+                                            String content2 = content1.toString(CharsetUtil.UTF_8);
+                                            JSONObject data = JSONObject.parseObject(content2);
+                                            String interfaceName = data.getString("interfaceName");
+                                            String host = data.getString("host");
+                                            int port = data.getInteger("port");
+                                            String implClassName = data.getString("implClassName");
+                                            ServiceRegister.register(interfaceName,implClassName,host,port);
+                                            log.debug("服务端接收到客户端注册请求: {} {} {}", interfaceName, host, port);
+                                            String responseBody = "success";
+                                            ByteBuf content = Unpooled.copiedBuffer(responseBody, CharsetUtil.UTF_8);
+                                            FullHttpResponse response = new DefaultFullHttpResponse(
+                                                    HttpVersion.HTTP_1_1,
+                                                    HttpResponseStatus.OK,
+                                                    content
+                                            );
+                                            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=UTF-8");
+                                            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
+                                            ctx.writeAndFlush(response);
+                                            ctx.close();
+                                            log.debug("服务端注册成功: {} {} {}", interfaceName, host, port);
+                                        }else if(uri.equals("/unregister")&& method.equals("POST")){
+                                            ByteBuf content1 = request.content();
+                                            String content2 = content1.toString(CharsetUtil.UTF_8);
+                                            JSONObject jsonObject = JSONObject.parseObject(content2);
+                                            JSONObject data = jsonObject.getJSONObject("data");
+                                            String interfaceName = data.getString("interfaceName");
+                                            String host = data.getString("host");
+                                            int port = data.getInteger("port");
+                                            //todo 新建一个http请求发给注册中心
+                                            //......
+                                            ServiceRegister.remove(interfaceName,host,port);
+                                            log.debug("服务端接收到客户端注销请求: {} {} {}", interfaceName, host, port);
+                                        }else if(uri.equals("/list")&& method.equals("GET")){
+                                            String responseBody = "success";
+                                            ByteBuf content = Unpooled.copiedBuffer(responseBody, CharsetUtil.UTF_8);
+                                            //todo 新建一个http请求发给注册中心
+                                            FullHttpResponse response = new DefaultFullHttpResponse(
+                                                    HttpVersion.HTTP_1_1,
+                                                    HttpResponseStatus.OK,
+                                                    content
+                                            );
+                                            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=UTF-8");
+                                            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
+                                            ctx.writeAndFlush(response);
+                                            ctx.close();
+                                            log.debug("服务端返回服务列表: {}", ServiceRegister.serviceList());
+                                        } else if (uri.equals("/executeService")&& method.equals("POST")) {
+                                            //我需要获取对应的服务名称，然后调用对应的服务
+                                            ByteBuf content1 = request.content();
+                                            String rpcRequest = content1.toString(CharsetUtil.UTF_8);
+                                            PRCRequest bean = JSONUtil.toBean(rpcRequest, PRCRequest.class);
+                                            //todo 新建一个http请求发给注册中心
+
+
+                                            //这一步本来是想在分布式环境下通过ip和port获取服务，但是现在全部是在本地运行，所以这里直接获取服务类
+                                            String interfaceName = bean.getInterfaceName();
+                                            Class<?> lookup = ServiceRegister.lookup(interfaceName);
+                                            //获取代理服务，这里的地址之后肯定是要变得，现在已经完全写死了......
+                                            ProxyUtil proxyUtil = new ProxyUtil("localhost", 8080);
+                                            Object proxy = proxyUtil.getProxy(bean, lookup);
+                                            //将对象写回
+                                            DefaultFullHttpResponse response = new DefaultFullHttpResponse(
+                                                    HttpVersion.HTTP_1_1,
+                                                    HttpResponseStatus.OK,
+                                                    Unpooled.copiedBuffer(JSONUtil.toJsonStr(proxy), CharsetUtil.UTF_8)
+                                            );
+                                            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json");
+                                            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
+                                            ctx.writeAndFlush(response);
+                                            log.debug("服务端返回数据: {}", proxy);
+                                            ctx.close();
+                                        }
+                                    }
+                                });
 
                                 response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=UTF-8");
                                 response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());

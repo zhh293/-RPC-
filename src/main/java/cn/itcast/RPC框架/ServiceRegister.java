@@ -214,7 +214,8 @@ class RegisterCenterWorker implements Runnable{
                                 ctx.writeAndFlush(response);
                                 ctx.close();
                                 log.debug("服务端返回服务列表: {}", ServiceRegister.serviceList());
-                            } else if (uri.equals("/executeService")&& method.equals("POST")) {
+                            }
+                            else if (uri.equals("/executeService")&& method.equals("POST")) {
                                 //我需要获取对应的服务名称，然后调用对应的服务
                                 ByteBuf content1 = request.content();
                                 String rpcRequest = content1.toString(CharsetUtil.UTF_8);
