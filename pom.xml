@@ -45,6 +45,18 @@
             <artifactId>guava</artifactId>
             <version>19.0</version>
         </dependency>
+            <!-- 给Java11+装回JavaScript引擎 -->
+            <dependency>
+                <groupId>org.openjdk.nashorn</groupId>
+                <artifactId>nashorn-core</artifactId>
+                <version>15.4</version>
+            </dependency>
+        <!-- 解析HTML提取LT（精准匹配你们校园网） -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.3</version>
+        </dependency>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-codec-http</artifactId>

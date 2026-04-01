@@ -1,0 +1,258 @@
+<div id="widget_drag_tip_div" class="ec-header-title" style="display: none;">
+
+</div>
+<div id="widget_drag_opt_div" class="operate-bar fullsize" style="display: none;">
+
+</div>
+<div class="ec-header-title" id="language_header">
+	<div class="page-title">
+		<span id="header_menu_name" ></span>
+	</div>
+	<!-- 滚动公告 -->
+	<div class="ad-sm-mod-container animation-all-05s" id="header_rolling_notice"
+		style="background-image: url(./defaults/image/common/icon/ad-icon.png);display: none" >
+	</div>
+</div>
+<div class="operate-bar fullsize" id="language_header_operate">
+</div>
+
+<!-- header 头部右侧-->
+<script id="header_main_operate_template" type="text/html">
+
+	<!-- 切换到旧版 -->
+	<div class="operate-btn-box" id="toOldPortal" style="display: none;" >
+		<a class="icon-btn" >
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAUCAYAAAB4d5a9AAAACXBIWXMAAAsTAAALEwEAmpwYAAACcElEQVQ4ja2VXUhTYRjHf7q3cps4FZebzfkBzfxIpzWzQOgLirzpoqhuJOomhEAIkuoqiKDoRqiki26qi6zuoqiMDCXTGX6kJaLpXK1OztSps9rQddFcJ9sZTX2u3vN/nuf/O8/hvO8bs6+yOgFoBEpY+egAdsQCtiDAAfQEk/L1cqIEsAlAFxTOAQOAHTgDDAOtKwDSCdnDNeB7cF0nWy875JBEYBrol2lTS/TVAOnhIK3A03AdWnWc0GjUwv1t4kcUoD1AGUCsTBwIV5lhMsZfvXD66KaNGwxRAP7yk08yv7hq2+ZCQ/Xxw0e0GnVCeak1z5JtNgAEAoH5/g8jUkOz3RkIBJQgIT+hVLGluCC1pqrymFCpVgFY8y02eX7v9q0cqNg1fPbS9fqx8cmfkUZSrS8qywUOAd3A5ELCJY16zWmpMZkmYxZAW2fvK3vXu86+QUe/S3I79SlJySnJiUZrnkX/uLGlN4x3ImAF7ilOAnC57naT5B6fOFixc7+96/3gk5evHQs58zrD29rzp05mmdNybEW5+vbuPreST0QIwK0Hj3qk0THPtHfWJ9edLsnr+PR5wJJlLijOz0lfFgTgWVObM5zu8/n9AEIIVaT+2EjJSKFVx4lMkzEbYMjpGo1U+1+T5Fuyk9LTUhfOOBLitWt2l5eWxWs1uvHJqa8NzeEnjQpysabqhBCq1Yv1Ge+s58qNO/fn5uYVN8tiiOJ3fdHyptFkXBva8T6/3zfy8YtU//B5j2d6xq/QFvKTQwqBIeCft6q9eTfaIz8m6BeCeGSQDEDxV4wi9Py5pzwCaOf3NVkSTOgUGpcSHUD7L/DBvqoduma0AAAAAElFTkSuQmCC" />
+			<span>{{i18n('head.toOldPortal')}}</span>
+		</a>
+	</div>
+
+	<!-- 消息中心 -->
+	<div class="operate-btn-box" id="message_center" style="display: none;">
+		<a  class="icon-btn" title="{{i18n('home.menu.messageCenter')}}" >
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAXCAYAAAAGAx/kAAAACXBIWXMAAAsTAAALEwEAmpwYAAABEklEQVQ4jc3Uuy5EURjF8d+ZOaFAotCpPIBLNBS0ChJRi8w8ApGpJeMFSERFM6VG5/IOepdEolPQSETQGIV9hLHP4FDMqnbW/tZ/X/MlzWZTTHPVFZjBRLBOcAwHjc0v9clsZTkKClpDKYxfsJ5XmOb4g1hFBf3Bu0MfNnDdGii1GljAeQANhMXSMK7hAvPfgaaxh968I4S5fUy1A22jqw0kUznURkHjGP4BJNMIRmOgsV9AMkVB3QVAPTHQn9TZoHKBfBIDTRYAvWdSbz+1hsUCoCVcYivFfQFApgR11Dvv1VIfbv4v+rcdJa09O/TqKoZyMldo8Ll35+3oEI8R/wlHsUAe6BY7OMUzHnCGXdzEAq9kTS1ymei8AgAAAABJRU5ErkJggg==" />
+		</a>
+		<span id="message_center_num" class="point-number" style="display: none;"></span>
+	</div>
+
+	<!-- 校历 -->
+	<div class="operate-btn-box"  id="academicCalendar" style="display: none;">
+		<a class="icon-btn" title="{{i18n('head.academicCalendar')}}" >
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAjElEQVQ4jWP0istnQAOHGRgYbBgYGI4wMDDYokvik2fCotgGjSZanglq038kjAz+Y8G45A8z4XEBqcAGmzfJBlQ1jMXe1ZORaoYxYAYq+YYd3L2dWmZROcyQOVsXTiBao3d8AYYYVV3G6BWXT7UIoF2YRQd64FS4dP0OgobRzmXE2I4PUD2jH6GSWUcBM+oi1m50+qMAAAAASUVORK5CYII=" />
+		</a>
+	</div>
+
+	<!-- 帮助-->
+	<div class="operate-btn-box" id="help" style="display: none;">
+		<a  class="icon-btn" title="{{i18n('head.help')}}" >
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAclBMVEUAAABKXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm9KXm////93hpOlr7fS19vd4eRsfIq7wsn09fbo6+3GzNKwuMCZpa6DkZxhcoFVaHhxu8KxAAAAFnRSTlMA9RII8ubj39C3r2YkG4J8bwzXyoltHRG7pAAAALVJREFUGNNtkdkSgyAMRQPWFdxaSwC1e///F0s1DDDjeTrcCQQI7IyiKRkrG8EhkPUnRZy6DIi2UhGXltJCJRRbnlFtVP8/p6eFdpB2AJy6GXTcl80ZB6EotnZGXPfFFRoVmNHuUkOZxA+6DLCQroiaNIqfeNPeo0Msvr3mUctFf73WIJTHmMXrQM9xaERDyjhAR/5BfJFOh191HsEhizTNJWzIKqmVB0Nj0wgBPtS5214PNOIf1KUga6gG5/sAAAAASUVORK5CYII=" />
+		</a>
+	</div>
+
+	<!-- 问题反馈-->
+	<div class="operate-btn-box"  id="feedback" style="display: none;">
+		<a class="icon-btn" title="{{i18n('head.feed_back')}}" >
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAWCAYAAADafVyIAAAACXBIWXMAAAsTAAALEwEAmpwYAAABlklEQVRIibXVz0tUURQH8M88Ri0Uwh+BBIFbadGyrS1z1U5CmVxEGxcTUigSBNIqaemm2pQudOeqdbRQ5g9o48JFUZTQDwQLxx+5uG/y8ea9UWemLzwu75zvPeeee+/53sJoqdyJZ5hAv7PjO5Ywg2oeqYh5lM8RuIZ+PMAhHuaRItxvIngSdxs5I/S2mGCgkbOYNqy9Wsgk3r736LRE3XiN93iDX4QK2oUChlDCKoahMFoq/21T8B68S9h+YKydFaTRh4l2nkEWRv5nBXClroImV5qHjgg7LQb52cgZCXe3FazE44UM31GEWaExcgUrB1VhcTUdup7B2Y7wW9CTHuFq9eFtijie8NW+bkzG8yOhwdJYTx7yvpP9/JOwbwideZhTyeW4imsp+x6W625RjOF43BL0/gU6M3iXMKhecqp4go9ZCW7FE57iuSBaXzGFG+jIWRQcoIJFbBK0qAG/Dl3CQ1OIk80lfBVMC1vzD+ft5D18wWes4UPCt5sO3kyCJI7wGN/i/6tZpFa16BPu4CUu4maacAwgTUqdkuywYgAAAABJRU5ErkJggg==" />
+		</a>
+	</div>
+
+	<!-- 主题设置 -->
+	<div class="operate-btn-box" id="theme_settings" style="display: none;">
+		<a class="icon-btn" title="{{i18n('home.theme.setting')}}"  >
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAWCAYAAAArdgcFAAAACXBIWXMAAAsTAAALEwEAmpwYAAABp0lEQVQ4jaXUPWsUURTG8d/qgpXEIlFMQEgkdiEgvkQharBQ0vgBhCiINgoRLdQmKIjBFMkHcAWtLPwEKRRRicGXSrQIuhZKQLaxtclazF2YvZk7G8anGeY55/lzZzj31KZnZhWohou4h1e4gHZUf4pTuIsn2Igh20fHJ2JvAs9xFX0YRx0/sBc7cRPXQv0czuALfnWdMDr5MbzFtqLP6aENTGKlY8SQ3xWgyXwMb+J1RfAbfC+D78BgRfhgyCfhd3CgInwUt1LwEVxPBFuYx5XwbCX6bgQOshF7hLMYks1vrM84HQEX8RJjUW8fvslGcrk2PTPbVq6jeF/gH8KHsmCveW4lwPBR+vdsCf5f6gUfwJFE7XCol8Ib+Kl7MeXVKIAM4HGivx14jTouB3MEn7Arah7D1wBrhr5L6C8A/8FB2ZJTzxWaWJKt2Vj9oguS0GIHzOZ//hBrW4AUaQ0LeSOG/8V6Rfh6yCfh+3GyIvxEyCfheyqCyVbH7jL4Co5jNfLvY1i2MYfDe16rIfcub9ZtVqfxPB7gBeZ034M57MMUbuOZgnvyD6gAUCZQj4czAAAAAElFTkSuQmCC" />
+		</a>
+		<div class="select-page-option" style="top:56px;right:-100px;">
+			<div class="line-box"></div>
+			<!-- 背景图切换 -->
+			<div class="page-option-title" id="set_background_switch_title_name" style="display: none;" >{{i18n('home.theme.background_image.switch')}}</div>
+			<div class="option-block" id="set_background_switch_radio_div" style="display: none;" >
+				<div class="select-option-content">
+					<a class="select-option-item" name="set_background_switch" value="1" >{{i18n('common.yes')}}</a>
+					<a class="select-option-item" name="set_background_switch" value="0" >{{i18n('common.no')}}</a>
+				</div>
+			</div>
+			<!-- 背景图设置-->
+			<div class="page-option-title" id="set_background_image_title_name" style="display: none;" >{{i18n('home.theme.background_image.title')}}</div>
+			<div class="option-block bg-image-content" id="set_background_image_radio_div" style="display: none;" >
+			</div>
+			<!-- 字体大小 -->
+			<div class="page-option-title" id="set_font_size_title_name" style="display: none;" >{{i18n('home.theme.font.size')}}</div>
+			<div class="option-block" id="set_font_size_radio_div" style="display: none;" >
+				<div class="select-option-content">
+					<a class="select-option-item" name="set_font_size" value="0" >{{i18n('home.theme.font.size_small')}}</a>
+					<a class="select-option-item" name="set_font_size" value="1" >{{i18n('home.theme.font.size_medium')}}</a>
+					<a class="select-option-item" name="set_font_size" value="2" >{{i18n('home.theme.font.size_large')}}</a>
+					<a class="select-option-item" name="set_font_size" value="3" >{{i18n('home.theme.font.size_extra_large')}}</a>
+				</div>
+			</div>
+			<!-- 选择语言 -->
+			<div class="page-option-title" id="set_language_title_name" style="display: none;" >{{i18n('home.theme.language.language_select')}}</div>
+			<div class="option-block" id="set_language_radio_div" style="display: none;" >
+				<div class="select-option-content">
+					<a class="select-option-item" name="set_language" value="zh-CN">{{i18n('home.theme.language.language_zh_cn')}}</a>
+					<a class="select-option-item" name="set_language" value="en" >{{i18n('home.theme.language.language_en_us')}}</a>
+				</div>
+			</div>
+			<!-- 编辑组件   -->
+			<div class="page-option-title" id="set_page_widget" style="display: none;" >
+				<span id="a_widget_rest" class="edit-grid">{{i18n('home.theme.widget.reset')}}</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- 我的信息 -->
+	<div class="user-info-box" id="headMyInfo">
+		<div class="avatar-pic-box">
+			<p class="user-icon-box fixed-avatar-picture">
+				<canvas id="canvas_header" width="80px" height="80px" style="position:absolute;top:0;left:0;width:40px;height:40px;">
+					抱歉您的浏览器不支持此功能
+				</canvas>
+				<span class="pull-left user-head-color-left" ></span>
+				<span class="pull-right user-head-color-right"></span>
+			</p>
+			<p class="user-name-box"><span id="login_user_name"></span><i class="fa fa-angle-down"></i></p>
+		</div>
+		<ul class="ellipsis-dropdown" style="top:54px;">
+			<li class=" bg-theme-hover-100" >
+				<a class="" ><span>{{i18n('home.menu.myInfo')}}</span></a>
+			</li>
+			<li class="bg-theme-hover-100">
+				<a><span>{{i18n('work.zx')}}</span></a>
+			</li>
+		</ul>
+	</div>
+</script>
+
+<!--无任务内容-->
+<script id="no_msg_task_template" type="text/html">
+	<div class="no-data">
+		<div class="no-data-picture">
+		</div>
+		<div class="no-data-text">{{i18n('common.no_data')}}</div>
+	</div>
+</script>
+
+<!-- 首页可用背景图 -->
+<script id="home_page_backGround_image_template" type="text/html">
+	{{each $data as item i}}
+		<a class="bg-image-select border-theme-hover-100" name="set_background_image" value="{{item.RESOURCE_ID}}"
+			style="background-image: url({{item.BACKGROUND_S_IMAGE_URL}});">
+			<i class="fa fa-check-circle color-theme-100"></i>
+			<span class="overview-image" name="{{item.BACKGROUND_IMAGE_DESCRIPTION}}" >
+				<img src="{{item.BACKGROUND_L_IMAGE_URL}}" />
+			</span>
+		</a>
+	{{/each}}
+</script>
+
+<!-- 添加组件 -->
+<script id="add_widget_template" type="text/html">
+
+	<div class="ec-popup-container page-popup-container" style="display:block;">
+		<div class="page-popup-shadow"></div>
+		<div class="popup-modal-container">
+			<div class="page-popup-modal width-1012 animation-all-05s" style="background-color:#f6faff;">
+				<div class="modal-header">
+					<h2 class="popup-title-box text-overflow color-theme-100">{{i18n('home.theme.widget.moduleSet')}}</h2>
+					<div class="popup-btn-box">
+						<div class="btn-box"><a class="zoom-btn"></a></div>
+						<div class="btn-box"><a class="close-btn"></a></div>
+					</div>
+				</div>
+				<div class="modal-body no-top-border animation-all-05s padding-0 padding-up-0 animation-all-05s" style="background-color:#f6faff;">
+					<div class="manage-block-container padding-up-0">
+						<div class="manage-block-title">
+							<div class="my-block-title title-box" style="background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAALElEQVQokWPkzXnynwE/YITSaciCTAQ04QQjQSMLAyLU6GcjsfFIHRtHgkYAC9kD5AxQG80AAAAASUVORK5CYII=);">
+								{{i18n('home.theme.widget.myAddModule')}}
+							</div>
+						</div>
+						<ul id="my_widget_list_ul" class="manage-block-list my-block">
+
+						</ul>
+						<div class="manage-block-title">
+							<div class="all-block-title title-box"  style="background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAMUlEQVQokWPkzXnynwE7YITSadgkmXBoIghGgkYWBkTo4QKzqG4joXjEKj+EQpX+GgE8rQV9o4P0KQAAAABJRU5ErkJggg==)">
+								{{i18n('home.theme.widget.allModule')}}
+							</div>
+							<div class="info-box"><i class="fa fa-info-circle push-right-5"></i><span>{{i18n('home.theme.widget.allModuleDesc')}}</span></div>
+						</div>
+						<ul id="not_widget_list_ui" class="manage-block-list all-block">
+
+						</ul>
+					</div>
+				</div>
+				<div class="modal-footer bg-theme-05 padding-up-15" style="justify-content:flex-end;">
+
+					<a id="cancleAddWidgetButton" class="btn btn-default push-down-10">{{i18n('common.cancel')}}</a>
+					<a id="confirmAddWidgetButton" class="btn btn-primary push-down-10">{{i18n('common.confirm')}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</script>
+
+<script id="my_widget_list_template" type="text/html">
+	{{each $data as myWidget i}}
+	<li id="{{myWidget.WIDGET_ID}}" WIDGET_NAME="{{myWidget.WIDGET_NAME}}" WIDGET_ICON="{{myWidget.WIDGET_ICON}}" WIDGET_COLUMN="{{myWidget.WIDGET_COLUMN}}" IS_LOCK="{{myWidget.IS_LOCK}}" class="manage-block bg-theme-03 border-theme-100 theme-shadow-down-6-3">
+		<div class="title-box bg-theme-05 color-theme-100 color-darken-theme-30" title="{{myWidget.WIDGET_NAME}}">{{subStr(myWidget.WIDGET_NAME,7)}}</div>
+		<div class="body-box">
+			<img src="./resource/defaults/image/home/manage_block/{{myWidget.WIDGET_ICON}}"/>
+		</div>
+		<div class="shadow-box">
+			<div class="icon-box"><i onclick="include.header.addDelWidget('{{myWidget.WIDGET_ID}}','del')" class="fa fa-times-circle"></i></div>
+			<div class="text-box">{{i18n('home.theme.widget.cancleAddModule')}}</div>
+		</div>
+	</li>
+	{{/each}}
+</script>
+
+<script id="not_widget_list_template" type="text/html">
+	{{each $data as notAddWidget i}}
+	<li id="{{notAddWidget.WIDGET_ID}}" WIDGET_NAME="{{notAddWidget.WIDGET_NAME}}" WIDGET_ICON="{{notAddWidget.WIDGET_ICON}}" WIDGET_COLUMN="{{notAddWidget.WIDGET_COLUMN}}" IS_LOCK="{{notAddWidget.IS_LOCK}}" class="manage-block bg-theme-03 border-theme-100 theme-shadow-down-6-3">
+		<div class="title-box bg-theme-05 color-theme-100 color-darken-theme-30" title="{{notAddWidget.WIDGET_NAME}}">{{subStr(notAddWidget.WIDGET_NAME,7)}}</div>
+		<div class="body-box">
+			<img src="./resource/defaults/image/home/manage_block/{{notAddWidget.WIDGET_ICON}}"/>
+		</div>
+		<div class="shadow-box">
+			<div class="icon-box"><i onclick="include.header.addDelWidget('{{notAddWidget.WIDGET_ID}}','add')" class="fa fa-plus-circle"></i></div>
+			<div class="text-box">{{i18n('home.theme.widget.addMyModule')}}</div>
+		</div>
+	</li>
+	{{/each}}
+</script>
+
+<script id="widget_drag_tip_template" type="text/html">
+	<div class="page-title color-666">
+		<i class="fa fa-info-circle fz-14"></i>
+		<span class="color-666 fz-14">{{i18n('home.theme.widget.drag_tip')}}</span>
+	</div>
+</script>
+<script id="widget_drag_opt_template" type="text/html">
+	<div class="setting-block-option" style="padding:15px 0;">
+		<a id="a_widget_init" class="btn btn-link color-333"><i class="fa fa-undo"></i>{{i18n('home.theme.widget.init')}}</a>
+		<a id="a_widget_add" class="btn btn-default"><i class="fa fa-plus"></i>{{i18n('home.theme.widget.add')}}</a>
+		<a id="a_widget_resting" class="btn btn-default push-left-10">{{i18n('common.cancel')}}</a>
+		<a id="a_widget_complete" class="btn btn-primary push-left-10">{{i18n('home.theme.widget.complete')}}</a>
+	</div>
+</script>
+
+<script>
+	var draw = function(img) {
+		var canvas = document.getElementById("canvas_header");
+		var context = canvas.getContext("2d");
+		var userPicW = $(".fixed-avatar-picture").width()*2
+		// console.log(userPicW,img.height,img.width)
+		context.drawImage(img,(userPicW - userPicW/img.height*img.width)/2, 0,userPicW/img.height*img.width,userPicW);
+		canvas = $("#canvas_header");
+		var canvasOffset = canvas.offset();
+		var canvasX = Math.floor(this.pageX - canvasOffset.left);
+		var canvasY = Math.floor(this.pageY - canvasOffset.top);
+		var colorDataLeft = document.getElementById("canvas_header").getPixelColor(userPicW/5, userPicW/8*3);
+		var colorDataRight = document.getElementById("canvas_header").getPixelColor(userPicW/5*4, userPicW/8*3);
+		$(".user-head-color-left").css("backgroundColor", colorDataLeft.rgba);
+		$(".user-head-color-right").css("backgroundColor", colorDataRight.rgba);
+	}
+</script>
+
+<script type="text/javascript" src="./resource/defaults/js/include/header.js"></script>
+<script type="text/javascript" src="./defaults/plugin/canvaspixelcolor/getcanvaspixelcolor.js"></script>

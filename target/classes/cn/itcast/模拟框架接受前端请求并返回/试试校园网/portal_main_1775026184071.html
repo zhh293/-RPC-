@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- META SECTION -->
+	<title>loading</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta content="always" name="referrer">
+	<meta name="theme-color" content="#2932e1">
+	<link rel="icon" href="./uploadfiles/sys/logo/newicon.ico" type="image/x-icon" />
+	<!-- END META SECTION -->
+	<!-- first load begin-->
+	<script type="text/javascript" src="./defaults/js/constant.js"></script>
+	<!-- 判断浏览器版本 -->
+	<script type="text/javascript">
+		// 浏览器低版本 预警页面开关。
+		var browserLowVersionEnable = false;
+		if (typeof (browser_low_version_enable) != "undefined") {
+			browserLowVersionEnable = browser_low_version_enable;
+		}
+		// 调用函数检查浏览器版本
+		if (browserLowVersionEnable) {
+			checkBrowserVersion();
+		}
+		// 检查版本是否低于最低要求
+		function checkBrowserVersion() {
+			// 使用const代替var，提高变量定义的清晰度
+			const minVersions = browser_low_version_min;
+			const userAgent = navigator.userAgent;
+			let browserName = '';
+			let fullVersion = '';
+			// 使用更健壮的浏览器识别方式，这里依然采用原生方法，但建议考虑使用外部库
+			const browserMatch = userAgent.match(/(Chrome|Firefox|Safari|Edge|MSIE|Trident)\/?\s*(\d+(\.\d+)*)/i);
+			if (browserMatch) {
+				browserName = browserMatch[1].replace('Trident', 'MSIE');
+				fullVersion = browserMatch[2];
+			} else {
+				// 异常处理：无法识别浏览器
+				console.error("无法识别的浏览器");
+				return; // 提前退出函数
+			}
+			// 检查版本是否低于最低要求
+			if (minVersions.hasOwnProperty(browserName) && parseFloat(fullVersion) < minVersions[browserName]) {
+				// 跳转低版本预警页面
+				location.href = javascript_path + "/lowBrowserVersionPage.html";
+			}
+		}
+	</script>
+
+	<!-- 使用合并后的核心库 -->
+	<script type="text/javascript" src="./defaults/js/merged/merged_framework_core.js"></script>
+	<script type='text/javascript' src='./defaults/plugin/My97DatePicker/WdatePicker.js'></script>
+	
+	<script type="text/javascript">
+		if (!Boolean($.cookie("accessToken"))) {
+			layer.ready(function () {
+				layer.load(2);
+			});
+		}
+	</script>
+	<!-- first load end-->
+
+	<!-- CSS INCLUDE -->
+	<link rel="stylesheet" type="text/css" href="./defaults/css/common/all.min.css" />
+	<!-- EOF CSS INCLUDE -->
+</head>
+
+<body id="body" class="type-se disable-animated">
+	<!-- 页面主体 -->
+	<div class="ec-page-outside-container cl-after" name="body_background_img" id="language_container"
+		style="background-position: right -30px; background-repeat: no-repeat; background-size: auto;">
+		<!--左侧菜单-->
+		<div id="page_menu" class="ec-page-nav-container animation-all-02s"></div>
+		<!--右侧部分-->
+		<div class="ec-page-main-container animation-all-02s without-menu">
+			<!--顶部内容-->
+			<div class="ec-page-header cl-after theme-shadow-down-3-3 animation-all-05s wow fadeIn" id="page_header">
+			</div>
+			<!--动态内容-->
+			<div id="page_content"></div>
+			<div id="uam_context"></div>
+			<div id="app_check_context"></div>
+			<iframe id="iframe_content_menu"
+				style="margin: 64px 0px 0px; width:100%; height: calc(-64px + 100vh); border-radius: 0px; overflow: hidden;display:none;">
+			</iframe>
+		</div>
+	</div>
+	<!--公共弹窗容器BEGIN-->
+	<div class="page-popup-container" style="display:none;">
+		<div class="page-popup-shadow"></div>
+		<div class="popup-modal-container" id="public_modal_container" tabindex="-1" role="dialog"
+			aria-labelledby="smallModalHead" aria-hidden="true"></div>
+	</div>
+	<!-- session过期 -->
+	<script id="timeout_popup-container" type="text/html">
+		<div class="page-popup-modal width-640 animation-all-05s">
+			<div class="modal-header bg-theme-04">
+				<h2 class="popup-title-box text-overflow color-theme-100 push-left-10">登录超时</h2>
+			</div>
+			<div class="tips-popup-body bg-theme-04">
+				<div class="tips-picture-container">
+					<img src="./resource/defaults/image/tips/overtime.png"/>
+				</div>
+				<div class="tips-word-container">
+					<p class="title-text bar">登录状态过期！</p>
+					<p class="info-text bar">您的登录状态可能已经过期，请点击确定刷新当前页面，
+						<font class="color-theme-100" id="alert_time_out_second_span">10</font> S后自动刷新。
+					</p>
+					<p class="info-text bar"></p>
+				</div>
+				<div class="modal-btn-row">
+					<a class="btn btn-primary" id="sessionTimeut_reloadPage">确定</a>
+					<a class="btn btn-default">取消</a>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<!--公共弹窗容器END-->
+	<script type='text/javascript' src='./defaults/js/all.mini.js'></script>
+	<script type="text/javascript" src="./defaults/js/common.js"></script>
+	<script type="text/javascript" src="./defaults/js/actions.js"></script>
+
+	<!-- 设置主题灰度 -->
+	<script type="text/javascript">
+		// 设置主题灰度开关，开启true，关闭false 。默认关闭。
+		var themeGrayscaleEnable = false;
+		if (typeof (theme_grayscale_enable) != "undefined") {
+			themeGrayscaleEnable = theme_grayscale_enable;
+		}
+		if (themeGrayscaleEnable) {
+			var grayscaleJs = "./defaults/js/grayscale.js";
+			// 动态加载JS文件
+			function loadJS(url, callback) {
+				var script = document.createElement('script'),
+					fn = callback || function () {
+					};
+				script.type = 'text/javascript';
+				//IE
+				if (script.readyState) {
+					script.onreadystatechange = function () {
+						if (script.readyState == 'loaded' || script.readyState == 'complete') {
+							script.onreadystatechange = null;
+							fn();
+						}
+					};
+				} else {
+					//其他浏览器
+					script.onload = function () {
+						fn();
+					};
+				}
+				script.src = url;
+				document.getElementsByTagName('head')[0].appendChild(script);
+			}
+			//用法
+			loadJS(grayscaleJs, function () {
+			});
+		}
+	</script>
+
+	
+	<script type='text/javascript' src='./defaults/language/operateCookie.js'></script>
+	<script type='text/javascript' src='./defaults/language/language_common.js'></script>
+
+	<script>
+		let baseReqUrl = contextpath + "/home/pingcurrent";
+		let reqUrl = baseReqUrl + "?service=" + encodeURIComponent(window.location);
+		//开发模式传递回调地址
+		if (isDev) {
+			reqUrl = baseReqUrl + "?loginUrl=" + encodeURIComponent(javascript_path + "/cas.html&" + oauth_client_id);
+		}
+		// 判断登录状态
+		Util.ajax({
+			url: reqUrl,
+			async: false,
+			success: function (data) {
+				if (data.code == 200) {
+					layer.closeAll();
+					document.cookie = "redirectURL=";
+					$.ajaxSettings.async = false;
+					// 加载公共页面元素
+					loadPageElements();
+					// 查询主题背景图信息
+					var backgroundImageInfo = getBodyImgUrlArray();
+					$.ajaxSettings.async = true;
+					// 获取使用的主题配置
+					var themeInfo = getThemeInfo(backgroundImageInfo);
+					// 应用主题函数
+					applyTheme(themeInfo);
+					// 加载刷新子站信息
+					getSubsiteInfo();
+					// 页面加载前去除滚动条
+					$("body,.ec-page-outside-container").css("overflow", "hidden");
+					// 使用toggleClass根据language参数决定是否添加lg-en类
+					$("#body").toggleClass("lg-en", getCurrentLanguage() === "en");
+				}
+			}
+		});
+		/**
+		 * 获取子站信息
+		 */
+		function getSubsiteInfo(){
+			Util.ajax({
+				url: contextpath + "/home/getSubsiteInfo",
+				async: false,
+				success: function (result) {
+					if (result.code == 200) {
+						let obj = result.data;
+						if (Util.isNotEmpty(obj)) {
+							// 记录子站详情到cookie
+							$.cookie("SubsiteInfo", JSON.stringify(obj));
+							// 设置标题
+							let title_name = obj.SUBSITE_TITLE;
+							if (getCurrentLanguage() == "en") {
+								title_name = obj.SUBSITE_TITLE_EN || obj.SUBSITE_TITLE;
+							}
+							$('title').text(title_name);
+						}
+					}
+				}
+			});
+		}
+		/**
+		 * 加载页面元素
+		 */
+		function loadPageElements() {
+			// 头部页面
+			$("#page_header").load("./resource/defaults/html/include/header.html?fv=20220101");
+			// 菜单页面
+			$("#page_menu").load("./resource/defaults/html/include/menu.html?fv=20220101");
+			//初始化选人组件
+			$("#uam_context").load("./resource/defaults/html/uam/uamSemsCommon.html?fv=20220101");
+			// 应用二次认证弹出
+			$("#app_check_context").load("./resource/defaults/html/appMarket/appCheckWindow.html?fv=20220101");
+		}
+		/**
+		 * 查询默认背景图
+		 */
+		function getBodyImgUrlArray() {
+			let defaultImage = null;
+			Util.ajax({
+				url: contextpath + "/backgroundImage/getSwitchUseImageInfo",
+				param: {
+					IS_MOBILE_USE: "0"
+				},
+				async: false,
+				success: function (result) {
+					if (result.code == 200) {
+						if (Util.isNotEmpty(result.data)) {
+							include.header.backGroundImageInfo = result.data.allImageListInfo;
+							// 如果有定制背景图
+							if (Util.isNotEmpty(result.data.customImageMapListInfo)) {
+								include.header.customBackGroundImageInfo = result.data.customImageMapListInfo[0];
+							}
+							defaultImage = result.data;
+						}
+					}
+				}
+			});
+			return defaultImage;
+		}
+		/**
+		 *	查询使用的主题
+		 */
+		function getThemeInfo(backgroundImageInfo) {
+			// 如果开启背景图切换
+			if (backgroundImageInfo.isAutoSwitch) {
+				const allImageList = backgroundImageInfo?.allImageListInfo || [];
+				if (allImageList.length > 0) {
+					// 从默认数据中随机选择一个设置
+					let themeInfo = Util.getRandomElementFromArray(allImageList);
+					include.header.themeInfo = themeInfo;
+					return themeInfo;
+				}
+			} else {
+				const defaultImageList = backgroundImageInfo?.defaultImageListInfo || [];
+				const customImageList = backgroundImageInfo?.customImageMapListInfo || [];
+				if (customImageList.length > 0) {
+					// 从默认数据中随机选择一个设置
+					let customThemeInfo = Util.getRandomElementFromArray(customImageList);
+					include.header.themeInfo = customThemeInfo;
+					return customThemeInfo;
+				}
+				if (defaultImageList.length > 0) {
+					// 从默认数据中随机选择一个设置
+					let defaultThemeInfo = Util.getRandomElementFromArray(defaultImageList);
+					include.header.themeInfo = defaultThemeInfo;
+					return defaultThemeInfo;
+				}
+			}
+			// 如果没有提供自定义背景图片并且默认主题列表为空，则themeInfo保持为null
+			return null;
+		}
+		/**
+		 * 应用主题背景
+		 */
+		function applyTheme(themeInfo) {
+			// 主题默认数据
+			let defaultThemeInfoConfig = home_default_themeInfo_config;
+			// 设置主题
+			let themeInfoConfig = null;
+			if (Util.isNotEmpty(themeInfo)) {
+				themeInfoConfig = {
+					"themeType": themeInfo.THEME_CSS_TYPE_NAME,
+					"homeType": themeInfo.HOME_CSS_TYPE_NAME,
+					"backgroundImage": themeInfo.BACKGROUND_IMAGE_URL
+				};
+			}
+			// 合并配置
+			Object.assign(defaultThemeInfoConfig, themeInfoConfig);
+			// 判断加载哪个主题CSS
+			const themeCss = `./${defaultThemeInfoConfig.themeType}.css`;
+			loadStyles(themeCss);
+			// global-ec.css 需要在主题样式后加载
+			const globalCss = "./defaults/css/global/global-ec.css";
+			loadStyles(globalCss);
+			// 设置背景图
+			setBgImage(defaultThemeInfoConfig.backgroundImage);
+		}
+		/**
+		 * 设置背景图片的函数，减少代码冗余
+		 * @param {Object} badyurl
+		 */
+		function setBgImage(badyurl) {
+			$("div[name='body_background_img']").css("background-image", `url(${badyurl})`);
+		}
+		/**
+		 * 动态加载css文件
+		 * @param {Object} url
+		 */
+		function loadStyles(url) {
+			const link = document.createElement("link");
+			link.type = "text/css";
+			link.rel = "stylesheet";
+			link.href = url;
+			const head = document.getElementsByTagName("head")[0];
+			head.appendChild(link);
+		}
+	</script>
+</body>
+
+</html>

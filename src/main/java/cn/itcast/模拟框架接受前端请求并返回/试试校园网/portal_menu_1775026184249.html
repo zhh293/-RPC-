@@ -1,0 +1,83 @@
+<div id="animation-menu-bg" class="ec-page-nav-bg">
+</div>
+<!-- 菜单箭头 -->
+<a class="nav-fold-btn animation-all-02s">
+	<i class="fa fa-angle-left"></i>
+</a>
+
+<!--菜单模板-->
+<script id="menu_template" type="text/html">
+	<div class="logo-container wow fadeInLeft">
+		<div class="logo-inside">
+			<img id="subsite_img" src="" style="max-width: 140px;"/>
+		</div>
+	</div>
+	<div class="nav-container animation-all-02s wow fadeInLeft">
+		<div class="nav-block">
+			<ul class="nav-list" id="left_top_menu_container">
+			</ul>
+		</div>
+	</div>
+	<div class="hover-menu-item theme-shadow-down-3-3">
+		<div class="hover-menu-item-inside"></div>
+	</div>
+	<div id="robot_outer_container" style="display: none;">
+	</div>
+</script>
+
+<!--左侧菜单数据-->
+<script id="left_top_menu_template" type="text/html">
+	{{each $data.data as o i}}
+		<li class="nav-list-item animation-all-04s" {{if o.IS_SHOW!='1'}}style="display:none;"{{/if}} >
+			<a class="nav-list-item-link" name="{{o.PERM_ITEM_ID}}" addr="{{o.PERM_ITEM_URL}}" open_type="{{o.OPEN_TYPE}}">
+				<span class="nav-icon-box">
+					<img src="./defaults/image/ec-nav/{{o.PERM_ITEM_ICON}}.png" class="app-icon"/>
+				</span>
+				<span class="nav-name text-overflow">{{i18n(o.PERM_ITEM_CODE)}}
+					<span id="{{o.PERM_ITEM_ID}}_point"></span>
+				</span>
+			</a>
+		</li>
+	{{/each}}
+</script>
+
+<!--中间教育局推荐菜单-->
+<script id="left_middle_menu_template" type="text/html">
+	<ul class="nav-list">
+		{{each $data.data.RECOMMEND_LIST as item i}}
+			<li class="nav-list-item animation-all-04s" url="{{item.PC_ACCESS_ADRESS}}" new_page="{{item.NEW_PAGE}}">
+				<a class="nav-list-item-link" url="{{item.PC_ACCESS_ADRESS}}" new_page="{{item.NEW_PAGE}}" data-id="{{item.RESOURCE_ID}}" >
+					<span class="nav-icon-box">
+						<img src="{{whiteImage(item.APP_LOGO)}}" class="app-icon"
+							onerror="this.src='./defaults/image/common/app_default.png'"/>
+					</span>
+					<span class="nav-name text-overflow" title="{{languageSwitch(item.APP_NAME,item.APP_EN_NAME)}}">
+						{{languageSwitch(item.APP_NAME,item.APP_EN_NAME)}}
+					</span>
+				</a>
+			</li>
+		{{/each}}
+	</ul>
+</script>
+
+<!--底部学校推荐菜单-->
+<script id="left_bottom_menu_template" type="text/html">
+	<ul class="nav-list">
+		{{each $data.data.CUSTOMIZE_LIST as item i}}
+			<li class="nav-list-item animation-all-04s" url="{{item.PC_ACCESS_ADRESS}}" new_page="{{item.NEW_PAGE}}">
+				<a class="nav-list-item-link" url="{{item.PC_ACCESS_ADRESS}}" new_page="{{item.NEW_PAGE}}" data-id="{{item.OPEN_ID}}" >
+					<span class="nav-icon-box">
+						<img src="{{whiteImage(item.APP_LOGO)}}" class="app-icon"
+							onerror="this.src='./defaults/image/common/app_default.png'"/>
+					</span>
+					<span class="nav-name text-overflow" title="{{languageSwitch(item.APP_NAME,item.APP_EN_NAME)}}">
+						{{languageSwitch(item.APP_NAME,item.APP_EN_NAME)}}
+					</span>
+				</a>
+			</li>
+		{{/each}}
+	</ul>
+</script>
+
+<script type="text/javascript" src="./defaults/plugin/scrolltotop/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="./resource/defaults/js/include/menu.js"></script>
